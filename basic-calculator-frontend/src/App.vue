@@ -55,7 +55,11 @@
 
 
 <style scoped>
-  /* stile del componente */
+  
+  h1 {
+    text-align: start;
+  }
+
   .container {
     display: flex;
     flex-direction: column;
