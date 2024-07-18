@@ -6,10 +6,10 @@
       return {
         results: null,
         operations: [
-          { sum: { n1: 0, n2: 0 } },
-          { sub: { n1: 0, n2: 0 } },
-          { multiply: { n1: 0, n2: 0 } },
-          { divide: { n1: 1, n2: 1 } }
+          { name: 'sum', operator:'+', n1: 0, n2: 0 },
+          { name: 'sub', operator: '-', n1: 0, n2: 0 },
+          { name: 'multiply', operator: '*', n1: 0, n2: 0 },
+          { name: 'divide', operator: '/', n1: 1, n2: 1 }
         ]
       }
     },
@@ -18,10 +18,10 @@
         axios.get('http://127.0.0.1:8000/api/calculate', 
         {
           params: {
-            sum: this.operations.sum,
-            sub: this.operations.sub,
-            multiply: this.operations.multiply,
-            divide: this.operations.divide,
+            sum: this.operations[0],
+            sub: this.operations[1],
+            multiply: this.operations[2],
+            divide: this.operations[3],
           }
         })
         .then( res => {
@@ -38,14 +38,51 @@
 
 
 <template>
-  <!-- html componente -->
-
+  
+  <h1>Basic operations</h1>
+  <div class="container">
+    <div v-for="operation, index in this.operations" :key="index" class="operation">
+      <input @keyup="calculate" @change="calculate" v-model="this.operations[index].n1" type="number">
+      <span>{{ operation.operator }}</span>
+      <input @keyup="calculate" @change="calculate" v-model="this.operations[index].n2" type="number">
+      <span>=</span>
+      <span>{{ this.results?.[`${operation.name}`] }}</span>
+    </div>
+  </div>
   
 </template>
 
 
 <style scoped>
   /* stile del componente */
+  .container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+  }
 
+  .operation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .operation input {
+    height: 100px;
+    width: 100px;
+    font-size: 5rem;
+    text-align: center;
+  }
+
+  .operation span {
+    height: 100px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1rem;
+    font-size: 5rem;
+    font-weight: bolder;
+  }
   
 </style>
