@@ -14,6 +14,7 @@
       }
     },
     methods: {
+      // method that sends operations and gets results
       calculate() {
         axios.get('http://127.0.0.1:8000/api/calculate', 
         {
