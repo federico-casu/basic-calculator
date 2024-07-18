@@ -4,28 +4,34 @@
   export default {
     data() {
       return {
-        
+        results: null,
+        operations: [
+          { sum: { n1: 0, n2: 0 } },
+          { sub: { n1: 0, n2: 0 } },
+          { multiply: { n1: 0, n2: 0 } },
+          { divide: { n1: 1, n2: 1 } }
+        ]
       }
     },
     methods: {
-      
-    },
-    mounted() {
-      axios.get('http://127.0.0.1:8000/api/calculate', 
+      calculate() {
+        axios.get('http://127.0.0.1:8000/api/calculate', 
         {
           params: {
-            sum: this.sum,
-            sub: this.sub,
-            multiply: this.multiply,
-            divide: this.divide,
+            sum: this.operations.sum,
+            sub: this.operations.sub,
+            multiply: this.operations.multiply,
+            divide: this.operations.divide,
           }
-        }
-      )
-      .then( res => {
-        this.results = res.data.results
-        console.log(res)
-        // console.log(this.results)
-      } )
+        })
+        .then( res => {
+          this.results = res.data.results
+          console.log(res.data)
+        })
+      }
+    },
+    mounted() {
+      this.calculate()
     }
   }
 </script>
